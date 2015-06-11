@@ -1,0 +1,17 @@
+/Nano/bin
+/Nano/obj
+/NanoTests/obj
+/NanoTests/bin
+/Nano/packages
+/NanoTests/packages
+/BasicSpriteDrawing/bin
+/BasicSpriteDrawing/obj
+/BasicSpriteMovement/bin
+/BasicSpriteMovement/obj
+/packages
+/bin
+
+
+*.dll
+
+*.userprefs
