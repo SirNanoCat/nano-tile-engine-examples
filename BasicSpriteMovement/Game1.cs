@@ -6,9 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 
-using Nano.Engine.Sprites;
+using Nano.Engine.Graphics.Sprites;
 using Nano.Input;
 using Nano.Engine.Sys;
+using Nano.Engine.Graphics;
 
 #endregion
 
@@ -20,16 +21,16 @@ namespace BasicSpriteMovement
     public class Game1 : Game
     {
         GraphicsDeviceManager m_Graphics;
-        SpriteBatch m_SpriteBatch;
 
         ISprite m_Sprite;
         IInputService m_Input;
+        ISpriteManager m_SpriteManager;
 
         public Game1()
         {
             m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";              
-            m_Graphics.IsFullScreen = true;     
+            m_Graphics.IsFullScreen = true;    
         }
 
         /// <summary>
@@ -44,12 +45,7 @@ namespace BasicSpriteMovement
 
             var input = new InputManager(this);
             Components.Add(input);
-            m_Input = input;
-
-            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
-            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
-
-            m_Sprite.Position = new Vector2(x,y);
+            m_Input = input;      
         }
 
         /// <summary>
@@ -58,10 +54,14 @@ namespace BasicSpriteMovement
         /// </summary>
         protected override void LoadContent()
         {
-            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
+            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
 
-            Texture2D texture = Content.Load<Texture2D>("ship");
-            m_Sprite = new BasicSprite(texture);
+            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship");
+
+            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
+            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
+
+            m_Sprite.Position = new Vector2(x,y);
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace BasicSpriteMovement
         {
             m_Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            m_SpriteBatch.Begin();
-            m_Sprite.Draw(m_SpriteBatch);
-            m_SpriteBatch.End();
+            m_SpriteManager.StartBatch();
+            m_SpriteManager.DrawSprite(m_Sprite);
+            m_SpriteManager.EndBatch();
 
             base.Draw(gameTime);
         }

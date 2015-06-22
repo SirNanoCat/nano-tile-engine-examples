@@ -6,7 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 
-using Nano.Engine.Sprites;
+using Nano.Engine.Graphics.Sprites;
+using Nano.Engine.Graphics;
+
+
 #endregion
 
 namespace BasicSpriteDrawing
@@ -17,7 +20,7 @@ namespace BasicSpriteDrawing
     public class Game1 : Game
     {
         GraphicsDeviceManager m_Graphics;
-        SpriteBatch m_SpriteBatch;
+        ISpriteManager m_SpriteManager;
 
         ISprite m_Sprite;
 
@@ -38,7 +41,8 @@ namespace BasicSpriteDrawing
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-				
+		
+            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
         }
 
         /// <summary>
@@ -47,12 +51,7 @@ namespace BasicSpriteDrawing
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            //TODO: use this.Content to load your game content here
-            Texture2D texture = Content.Load<Texture2D>("ship");
-            m_Sprite = new BasicSprite(texture);
+            m_Sprite = m_SpriteManager.CreateSprite("ship",new Rectangle());
         }
 
         /// <summary>
@@ -84,9 +83,9 @@ namespace BasicSpriteDrawing
 
             m_Sprite.Position = new Vector2(x,y);
 
-            m_SpriteBatch.Begin();
-            m_Sprite.Draw(m_SpriteBatch);
-            m_SpriteBatch.End();
+            m_SpriteManager.StartBatch();
+            m_SpriteManager.DrawSprite(m_Sprite);
+            m_SpriteManager.EndBatch();
 
             base.Draw(gameTime);
         }

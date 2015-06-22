@@ -1,23 +1,7 @@
-/Nano/bin
-/Nano/obj
-/NanoTests/obj
-/NanoTests/bin
-/Nano/packages
-/NanoTests/packages
-/BasicSpriteDrawing/bin
-/BasicSpriteDrawing/obj
-/BasicSpriteMovement/bin
-/BasicSpriteMovement/obj
-/SimpleStateManagement/bin
-/SimpleStateManagement/obj
-/Tileset/bin
-/Tileset/obj
-/Tileset/Content/bin
-/Tileset/Content/obj
-/packages
-/bin
-
+bin
+obj
+packages
 
 *.dll
-
 *.userprefs
+
