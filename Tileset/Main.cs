@@ -29,7 +29,7 @@ namespace Tileset
 
     class AppDelegate : NSApplicationDelegate
     {
-        private static Game1 game;
+        private static TilesetGame game;
 
         public override void FinishedLaunching(MonoMac.Foundation.NSObject notification)
         {
@@ -42,7 +42,7 @@ namespace Tileset
                 }
                 return null;
             };
-            game = new Game1();
+            game = new TilesetGame();
             game.Run();
         }
 

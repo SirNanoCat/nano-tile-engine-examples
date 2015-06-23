@@ -5,30 +5,27 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-
-using Nano.Engine.Graphics.Sprites;
-using Nano.Engine.Graphics;
-
+using Nano.Input;
+using Nano.Engine.Sys;
 
 #endregion
 
-namespace BasicSpriteDrawing
+namespace Tileset
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class TilesetGame : Game
     {
-        GraphicsDeviceManager m_Graphics;
-        ISpriteManager m_SpriteManager;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        IInputService m_Input;
 
-        ISprite m_Sprite;
-
-        public Game1()
+        public TilesetGame()
         {
-            m_Graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";	            
-            m_Graphics.IsFullScreen = true;		
+            graphics.IsFullScreen = true;		
         }
 
         /// <summary>
@@ -39,9 +36,12 @@ namespace BasicSpriteDrawing
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
 		
+            var input = new InputManager(this);
+            Components.Add(input);
+            m_Input = input;
+            ServiceLocator.Services.AddService<IInputService>(m_Input);
 
         }
 
@@ -51,9 +51,8 @@ namespace BasicSpriteDrawing
         /// </summary>
         protected override void LoadContent()
         {
-            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
-
-            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship",new Rectangle());
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         /// <summary>
@@ -63,11 +62,9 @@ namespace BasicSpriteDrawing
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
+            if (m_Input.KeyDown(Keys.Escape))
                 Exit();
-            }
-            // TODO: Add your update logic here			
+
             base.Update(gameTime);
         }
 
@@ -77,18 +74,10 @@ namespace BasicSpriteDrawing
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            m_Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 		
             //TODO: Add your drawing code here
-            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
-            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
-
-            m_Sprite.Position = new Vector2(x,y);
-
-            m_SpriteManager.StartBatch();
-            m_SpriteManager.DrawSprite(m_Sprite);
-            m_SpriteManager.EndBatch();
-
+            
             base.Draw(gameTime);
         }
     }

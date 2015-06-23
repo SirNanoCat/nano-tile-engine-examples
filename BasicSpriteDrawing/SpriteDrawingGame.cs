@@ -7,30 +7,28 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 
 using Nano.Engine.Graphics.Sprites;
-using Nano.Input;
-using Nano.Engine.Sys;
 using Nano.Engine.Graphics;
+
 
 #endregion
 
-namespace BasicSpriteMovement
+namespace BasicSpriteDrawing
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class SpriteDrawingGame : Game
     {
         GraphicsDeviceManager m_Graphics;
-
-        ISprite m_Sprite;
-        IInputService m_Input;
         ISpriteManager m_SpriteManager;
 
-        public Game1()
+        ISprite m_Sprite;
+
+        public SpriteDrawingGame()
         {
             m_Graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";              
-            m_Graphics.IsFullScreen = true;    
+            Content.RootDirectory = "Content";	            
+            m_Graphics.IsFullScreen = true;		
         }
 
         /// <summary>
@@ -41,11 +39,10 @@ namespace BasicSpriteMovement
         /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
             base.Initialize();
+		
 
-            var input = new InputManager(this);
-            Components.Add(input);
-            m_Input = input;      
         }
 
         /// <summary>
@@ -56,12 +53,7 @@ namespace BasicSpriteMovement
         {
             m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
 
-            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship");
-
-            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
-            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
-
-            m_Sprite.Position = new Vector2(x,y);
+            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship",new Rectangle());
         }
 
         /// <summary>
@@ -70,31 +62,13 @@ namespace BasicSpriteMovement
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {  
-            if (m_Input.KeyDown(Keys.Escape))
+        {
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
-            
+            }
+            // TODO: Add your update logic here			
             base.Update(gameTime);
-
-            float x = m_Sprite.Position.X;
-            float y = m_Sprite.Position.Y;
-            float rotation = m_Sprite.Rotation;
-
-            if (m_Input.KeyDown(Keys.D))
-                x += 5;
-            if (m_Input.KeyDown(Keys.A))
-                x -= 5;
-            if (m_Input.KeyDown(Keys.W))
-                y -= 5;
-            if (m_Input.KeyDown(Keys.S))
-                y += 5;
-            if (m_Input.KeyDown(Keys.E))
-                rotation += 0.1f;
-            if (m_Input.KeyDown(Keys.Q))
-                rotation -= 0.1f;
-
-            m_Sprite.Position = new Vector2(x,y);
-            m_Sprite.Rotation = rotation;
         }
 
         /// <summary>
@@ -104,6 +78,12 @@ namespace BasicSpriteMovement
         protected override void Draw(GameTime gameTime)
         {
             m_Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+		
+            //TODO: Add your drawing code here
+            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
+            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
+
+            m_Sprite.Position = new Vector2(x,y);
 
             m_SpriteManager.StartBatch();
             m_SpriteManager.DrawSprite(m_Sprite);

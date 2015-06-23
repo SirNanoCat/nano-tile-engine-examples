@@ -29,7 +29,7 @@ namespace BasicSpriteDrawing
 
     class AppDelegate : NSApplicationDelegate
     {
-        private static Game1 game;
+        private static SpriteDrawingGame game;
 
         public override void FinishedLaunching(MonoMac.Foundation.NSObject notification)
         {
@@ -42,7 +42,7 @@ namespace BasicSpriteDrawing
                 }
                 return null;
             };
-            game = new Game1();
+            game = new SpriteDrawingGame();
             game.Run();
         }
 

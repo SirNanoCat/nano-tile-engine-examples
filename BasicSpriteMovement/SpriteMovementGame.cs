@@ -5,31 +5,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
+
+using Nano.Engine.Graphics.Sprites;
 using Nano.Input;
-using Nano.StateManagement;
 using Nano.Engine.Sys;
+using Nano.Engine.Graphics;
 
 #endregion
 
-namespace SimpleStateManagement
-{   
+namespace BasicSpriteMovement
+{
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class SpriteMovementGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager m_Graphics;
 
+        ISprite m_Sprite;
         IInputService m_Input;
-        IGameStateService m_StateService;
-        IGameState m_TitleScreen;
+        ISpriteManager m_SpriteManager;
 
-        public Game1()
+        public SpriteMovementGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";              
-            graphics.IsFullScreen = true;   
+            m_Graphics.IsFullScreen = true;    
         }
 
         /// <summary>
@@ -40,24 +41,11 @@ namespace SimpleStateManagement
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
-
-            ServiceLocator.Instance.SetServiceContainer(Services);
 
             var input = new InputManager(this);
             Components.Add(input);
-            m_Input = input;
-            ServiceLocator.Services.AddService<IInputService>(m_Input);
-
-            var stateManager = new GameStateManager(this, new NullLogger());
-            Components.Add(stateManager);
-            m_StateService = stateManager;
-
-            m_TitleScreen = new TitleScreen(m_StateService, m_Input, graphics);
-
-            m_StateService.ChangeState(m_TitleScreen);
-
+            m_Input = input;      
         }
 
         /// <summary>
@@ -66,10 +54,14 @@ namespace SimpleStateManagement
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
 
-            //TODO: use this.Content to load your game content here 
+            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship");
+
+            int x = m_Graphics.GraphicsDevice.Viewport.Width / 2;
+            int y = m_Graphics.GraphicsDevice.Viewport.Height / 2;
+
+            m_Sprite.Position = new Vector2(x,y);
         }
 
         /// <summary>
@@ -78,11 +70,31 @@ namespace SimpleStateManagement
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
+        {  
             if (m_Input.KeyDown(Keys.Escape))
                 Exit();
-
+            
             base.Update(gameTime);
+
+            float x = m_Sprite.Position.X;
+            float y = m_Sprite.Position.Y;
+            float rotation = m_Sprite.Rotation;
+
+            if (m_Input.KeyDown(Keys.D))
+                x += 5;
+            if (m_Input.KeyDown(Keys.A))
+                x -= 5;
+            if (m_Input.KeyDown(Keys.W))
+                y -= 5;
+            if (m_Input.KeyDown(Keys.S))
+                y += 5;
+            if (m_Input.KeyDown(Keys.E))
+                rotation += 0.1f;
+            if (m_Input.KeyDown(Keys.Q))
+                rotation -= 0.1f;
+
+            m_Sprite.Position = new Vector2(x,y);
+            m_Sprite.Rotation = rotation;
         }
 
         /// <summary>
@@ -91,9 +103,11 @@ namespace SimpleStateManagement
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            m_Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //TODO: Add your drawing code here
+            m_SpriteManager.StartBatch();
+            m_SpriteManager.DrawSprite(m_Sprite);
+            m_SpriteManager.EndBatch();
 
             base.Draw(gameTime);
         }

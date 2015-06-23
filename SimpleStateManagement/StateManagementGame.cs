@@ -6,26 +6,29 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using Nano.Input;
+using Nano.StateManagement;
 using Nano.Engine.Sys;
 
 #endregion
 
-namespace Tileset
-{
+namespace SimpleStateManagement
+{   
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class StateManagementGame : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        IInputService m_Input;
 
-        public Game1()
+        IInputService m_Input;
+        IGameStateService m_StateService;
+        IGameState m_TitleScreen;
+
+        public StateManagementGame()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";	            
-            graphics.IsFullScreen = true;		
+            Content.RootDirectory = "Content";              
+            graphics.IsFullScreen = true;   
         }
 
         /// <summary>
@@ -36,12 +39,23 @@ namespace Tileset
         /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
             base.Initialize();
-		
+
+            ServiceLocator.Instance.SetServiceContainer(Services);
+
             var input = new InputManager(this);
             Components.Add(input);
             m_Input = input;
             ServiceLocator.Services.AddService<IInputService>(m_Input);
+
+            var stateManager = new GameStateManager(this, new NullLogger());
+            Components.Add(stateManager);
+            m_StateService = stateManager;
+
+            m_TitleScreen = new TitleScreen(m_StateService, m_Input, graphics);
+
+            m_StateService.ChangeState(m_TitleScreen);
 
         }
 
@@ -51,8 +65,6 @@ namespace Tileset
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         /// <summary>
@@ -75,9 +87,9 @@ namespace Tileset
         protected override void Draw(GameTime gameTime)
         {
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-		
+
             //TODO: Add your drawing code here
-            
+
             base.Draw(gameTime);
         }
     }

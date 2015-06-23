@@ -29,7 +29,7 @@ namespace SimpleStateManagement
 
     class AppDelegate : NSApplicationDelegate
     {
-        private static Game1 game;
+        private static StateManagementGame game;
 
         public override void FinishedLaunching(MonoMac.Foundation.NSObject notification)
         {
@@ -42,7 +42,7 @@ namespace SimpleStateManagement
                 }
                 return null;
             };
-            game = new Game1();
+            game = new StateManagementGame();
             game.Run();
         }
 
