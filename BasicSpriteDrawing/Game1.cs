@@ -42,7 +42,7 @@ namespace BasicSpriteDrawing
             // TODO: Add your initialization logic here
             base.Initialize();
 		
-            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
+
         }
 
         /// <summary>
@@ -51,7 +51,9 @@ namespace BasicSpriteDrawing
         /// </summary>
         protected override void LoadContent()
         {
-            m_Sprite = m_SpriteManager.CreateSprite("ship",new Rectangle());
+            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
+
+            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship",new Rectangle());
         }
 
         /// <summary>
