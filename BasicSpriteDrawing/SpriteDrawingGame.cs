@@ -53,7 +53,7 @@ namespace BasicSpriteDrawing
         {
             m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice)); 
 
-            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship",new Rectangle());
+            m_Sprite = m_SpriteManager.CreateSprite("Sprites/ship");
         }
 
         /// <summary>
