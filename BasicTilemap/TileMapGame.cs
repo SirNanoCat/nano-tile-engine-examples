@@ -9,6 +9,11 @@ using Nano.Input;
 using Nano.Engine.Graphics;
 using Nano.Engine.Graphics.Tileset;
 using Nano.Engine.Sys;
+using Nano.Engine;
+using System.Threading;
+using System.Collections.Generic;
+using Nano.Engine.Cameras;
+using OpenTK.Input;
 
 #endregion
 
@@ -23,12 +28,16 @@ namespace BasicTilemap
         IInputService m_Input;
         ISpriteManager m_SpriteManager;
         ITileset m_Tileset;
+        TileMap m_TileMap;
+        ICamera m_Camera;
+        Random m_RNG;
 
         public TileMapGame()
         {
             m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";	            
             m_Graphics.IsFullScreen = true;		
+            m_RNG = new Random(12345);
         }
 
         /// <summary>
@@ -56,10 +65,35 @@ namespace BasicTilemap
         /// </summary>
         protected override void LoadContent()
         {
-            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice));
-            //var tex2D = m_SpriteManager.CreateTexture2D("spritesheets/test-sprite-sheet");
-            //m_Tileset = new RegularTileset("test-tileset", tex2D, 4, 4, 32, 32);
+            int vpWidth = m_Graphics.GraphicsDevice.Viewport.Width;
+            int vpHeight = m_Graphics.GraphicsDevice.Viewport.Height;
+            var rect = new Rectangle(0, 0, vpWidth, vpHeight);
 
+            m_Camera = new Camera2D(rect);
+
+            m_SpriteManager = new SpriteManager(Content, new SpriteBatch(m_Graphics.GraphicsDevice));
+            var tex2D = m_SpriteManager.CreateTexture2D("spritesheets/basic-tiles");
+
+            m_Tileset = new RegularTileset("test-tileset", tex2D, 4, 4, 32, 32);
+
+            var tilesets = new List<ITileset>();
+            tilesets.Add(m_Tileset);
+
+            MapLayer layer = new MapLayer("ground layer", 100, 100);
+
+            for(int y = 0; y < 1000; y++)
+            {
+                for(int x = 0;x < 100; x++)
+                {
+                    int idx = m_RNG.Next(0,3);
+                    layer.SetTile(x,y,new TilesetTile(idx,0));
+                }
+            }
+
+            var layers = new List<MapLayer>();
+            layers.Add(layer);
+
+            m_TileMap = new TileMap(m_SpriteManager, TileMapType.Square, 32, 32, tilesets, layers);
         }
 
         /// <summary>
@@ -68,9 +102,25 @@ namespace BasicTilemap
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {		
+        {
             if (m_Input.KeyDown(Keys.Escape))
                 Exit();
+
+            float x = m_Camera.Position.X;
+            float y = m_Camera.Position.Y;
+
+
+            if (m_Input.KeyDown(Keys.D))
+                x += 5;
+            if (m_Input.KeyDown(Keys.A))
+                x -= 5;
+            if (m_Input.KeyDown(Keys.W))
+                y -= 5;
+            if (m_Input.KeyDown(Keys.S))
+                y += 5;
+
+            m_Camera.Position = new Vector2(x, y);
+            m_Camera.Update();
 
             base.Update(gameTime);
         }
@@ -83,9 +133,7 @@ namespace BasicTilemap
         {
             m_Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 		
-
-
-
+            m_TileMap.Draw(m_Camera);
             
             base.Draw(gameTime);
         }
