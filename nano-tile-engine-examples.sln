@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tileset", "Tileset\Tileset.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicTilemap", "BasicTilemap\BasicTilemap.csproj", "{7E7E15AB-B04F-4EAE-A169-43B4140C9737}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoTilemap", "IsoTilemap\IsoTilemap.csproj", "{CB3528FC-CA06-4F61-91E9-EBA828868E46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ACC6B8DD-3A00-44C0-8264-F9844A8C8C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC6B8DD-3A00-44C0-8264-F9844A8C8C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACC6B8DD-3A00-44C0-8264-F9844A8C8C56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB3528FC-CA06-4F61-91E9-EBA828868E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB3528FC-CA06-4F61-91E9-EBA828868E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB3528FC-CA06-4F61-91E9-EBA828868E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB3528FC-CA06-4F61-91E9-EBA828868E46}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0A4A13E-3087-4DE1-A8BB-A40E9EB2E538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0A4A13E-3087-4DE1-A8BB-A40E9EB2E538}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A4A13E-3087-4DE1-A8BB-A40E9EB2E538}.Release|Any CPU.ActiveCfg = Release|Any CPU
