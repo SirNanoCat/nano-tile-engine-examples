@@ -81,7 +81,7 @@ namespace BasicTilemap
 
             MapLayer layer = new MapLayer("ground layer", 100, 100);
 
-            for(int y = 0; y < 1000; y++)
+            for(int y = 0; y < 100; y++)
             {
                 for(int x = 0;x < 100; x++)
                 {
