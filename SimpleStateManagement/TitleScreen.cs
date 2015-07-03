@@ -1,7 +1,7 @@
 ﻿using System;
 using Nano.StateManagement;
 using Microsoft.Xna.Framework;
-using Nano.Input;
+using Nano.Engine.IO.Input;
 using Microsoft.Xna.Framework.Input;
 
 namespace SimpleStateManagement

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 
 using Nano.Engine.Graphics.Sprites;
-using Nano.Input;
+using Nano.Engine.IO.Input;
 using Nano.Engine.Sys;
 using Nano.Engine.Graphics;
 
