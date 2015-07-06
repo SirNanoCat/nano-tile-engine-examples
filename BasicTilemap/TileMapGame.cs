@@ -14,6 +14,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Nano.Engine.Cameras;
 using OpenTK.Input;
+using Nano.Engine.Graphics.Map;
 
 #endregion
 

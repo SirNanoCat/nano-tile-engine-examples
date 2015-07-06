@@ -1,17 +1,16 @@
 ﻿#region Using Statements
 using System;
 
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-using Nano.Engine.IO.Input;
-using Nano.Engine.Graphics;
-using Nano.Engine.Graphics.Tileset;
-using Nano.Engine;
 using Nano.Engine.Cameras;
+using Nano.Engine.Graphics;
+using Nano.Engine.Graphics.Map;
+using Nano.Engine.Graphics.Tileset;
+using Nano.Engine.IO.Input;
 using Nano.Engine.Sys;
-using System.Collections.Generic;
 
 #endregion
 
