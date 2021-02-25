@@ -1,16 +1,8 @@
-﻿#region Using Statements
-using System;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-
-using Nano.Engine.Graphics.Sprites;
 using Nano.Engine.Graphics;
-
-
-#endregion
+using Nano.Engine.Graphics.Sprites;
 
 namespace BasicSpriteDrawing
 {
@@ -93,4 +85,3 @@ namespace BasicSpriteDrawing
         }
     }
 }
-

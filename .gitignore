@@ -5,3 +5,6 @@ packages
 *.dll
 *.userprefs
 
+*.idea/
+*.DS_Store
+*.DotSettings.user

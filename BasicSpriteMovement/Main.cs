@@ -1,12 +1,4 @@
-﻿#region Using Statements
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using MonoMac.AppKit;
-using MonoMac.Foundation;
-
-#endregion
+﻿using System;
 
 namespace BasicSpriteMovement
 {
@@ -17,38 +9,10 @@ namespace BasicSpriteMovement
         /// </summary>
         static void Main(string[] args)
         {
-            NSApplication.Init();
-
-            using (var p = new NSAutoreleasePool())
+            using (var game = new SpriteMovementGame())
             {
-                NSApplication.SharedApplication.Delegate = new AppDelegate();
-                NSApplication.Main(args);
+                game.Run();
             }
-        }
-    }
-
-    class AppDelegate : NSApplicationDelegate
-    {
-        private static SpriteMovementGame game;
-
-        public override void FinishedLaunching(MonoMac.Foundation.NSObject notification)
-        {
-            // Handle a Xamarin.Mac Upgrade
-            AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs a) =>
-            {
-                if (a.Name.StartsWith("MonoMac"))
-                {
-                    return typeof(MonoMac.AppKit.AppKitFramework).Assembly;
-                }
-                return null;
-            };
-            game = new SpriteMovementGame();
-            game.Run();
-        }
-
-        public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender)
-        {
-            return true;
         }
     }
 

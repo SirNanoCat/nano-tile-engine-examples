@@ -3,17 +3,13 @@ using System;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using Nano.Engine.IO.Input;
 using Nano.Engine.Graphics;
 using Nano.Engine.Graphics.Tileset;
 using Nano.Engine.Sys;
-using Nano.Engine;
-using System.Threading;
 using System.Collections.Generic;
 using Nano.Engine.Cameras;
-using OpenTK.Input;
 using Nano.Engine.Graphics.Map;
 
 #endregion
